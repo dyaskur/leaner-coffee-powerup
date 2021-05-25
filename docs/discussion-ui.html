@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en-us">
-
-<head>
-    <meta charset="utf-8">
-    <title>Discussion UI</title>
-
-    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css" type="text/css"/>
-    <style>
-        .voting,
+<!doctype html><html lang="en-us"><head><meta charset="utf-8"><title>Discussion UI</title><link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css"/><style>.voting,
         .message {
             display: none;
         }
@@ -80,25 +71,4 @@
         .badge-elapsed.ongoing {
             background-color: #ff9f1a;
             color: #fff;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="message"></div>
-
-    <div class="badges">
-        <h3 class="badge-header badge-header-elapsed">Status</h3>
-        <h3 class="badge-header voting">Yes</h3>
-        <h3 class="badge-header voting">Not sure</h3>
-        <h3 class="badge-header voting">No</h3>
-
-        <div class="badge badge-elapsed"></div>
-        <div class="badge voting voting-up" onclick="window.discussionUIInstance.handleThumbs('UP');"></div>
-        <div class="badge voting voting-middle" onclick="window.discussionUIInstance.handleThumbs('MIDDLE');">0</div>
-        <div class="badge voting voting-down" onclick="window.discussionUIInstance.handleThumbs('DOWN');">0</div>
-    </div>
-
-    <script src="https://p.trellocdn.com/power-up.min.js"></script>
-<script type="text/javascript" src="discussion_ui.df3cc9ead373fa35b07d.js"></script></body>
-</html>
+        }</style><script defer="defer" src="discussion_ui.e14244649d1887041b2e.js"></script></head><body><div class="message" data-i18n-id="discussionUiMessageNone"></div><div class="message" data-i18n-id="discussionUiMessageEnded"></div><div class="badges"><h3 class="badge-header badge-header-text" data-i18n-id="discussionUiStatus"></h3><h3 class="badge-header badge-header-text" data-i18n-id="discussionUiWhatNext"></h3><h3 class="badge-header voting" data-i18n-id="discussionUiYes"></h3><h3 class="badge-header voting" data-i18n-id="discussionUiNotSure"></h3><h3 class="badge-header voting" data-i18n-id="discussionUiNo"></h3><div class="badge badge-elapsed"></div><div class="badge voting voting-up"></div><div class="badge voting voting-middle">0</div><div class="badge voting voting-down">0</div></div><script src="https://p.trellocdn.com/power-up.min.js"></script></body></html>
