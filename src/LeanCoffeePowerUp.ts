@@ -70,6 +70,35 @@ class LeanCoffeePowerUp extends LeanCoffeeBase {
     return this.cardStorage.saveVotes(t, votes);
   };
 
+  handleTimer = async (t: Trello.PowerUp.IFrame): Promise<void> => {
+    if (!await this.voting.canCurrentMemberVote(t)) {
+      return t.popup({
+        title: 'Leaner Coffee',
+        url: `${this.baseUrl}/too_many_votes.html`,
+        args: {
+          maxVotes: await this.voting.getMaxVotes(t),
+          localization: I18nConfig
+        },
+        height: 98
+      });
+    }
+
+    const votes = await this.voting.getVotes(t) || {};
+    const currentMember = await t.member('id', 'username', 'fullName', 'avatar');
+
+    if (votes[currentMember.id]) {
+      delete votes[currentMember.id];
+    } else {
+      votes[currentMember.id] = {
+        username: currentMember.username,
+        fullName: currentMember.fullName,
+        avatar: currentMember.avatar // currently unused
+      };
+    }
+
+    return this.cardStorage.saveVotes(t, votes);
+  };
+
   stopAndStart = async (t: Trello.PowerUp.IFrame): Promise<void> => {
     await this.discussion.end(t);
     await this.discussion.start(t);
