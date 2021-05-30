@@ -55,10 +55,10 @@ export const CapabilityHandlers = (powerUp: any): Trello.PowerUp.CapabilityHandl
     }),
     callback: powerUp.handleVoting
   }, {
-    icon: await powerUp.voting.hasCurrentMemberVoted(t) ? `${powerUp.baseUrl}/assets/powerup/heart.svg` : `${powerUp.baseUrl}/assets/powerup/timer.svg`,
-    text: await powerUp.voting.hasCurrentMemberVoted(t) ? t.localizeKey('startTimer', {symbol: '▶'}) : t.localizeKey('stopTimer', {symbol: '☐'}),
+    icon: `${powerUp.baseUrl}/assets/powerup/heart.svg`,
     url: 'workas://abc=1',
-    callback: powerUp.handleTimer
+    text: await powerUp.voting.hasCurrentMemberVoted(t) ? t.localizeKey('startTimer', {symbol: '▶'}) : t.localizeKey('stopTimer', {symbol: '☐'}),
+    callback: powerUp.handleVoting
   }],
 
   'card-detail-badges': async (t: Trello.PowerUp.IFrame): Promise<Trello.PowerUp.CardDetailBadge[]> => {
