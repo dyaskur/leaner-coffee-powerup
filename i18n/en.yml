@@ -5,6 +5,7 @@ voters: 'Voters'
 # Discussion Menu Button
 discussion: 'Discussion'
 startTimer: '{symbol} Start timer'
+stopTimer: '{symbol} Stop timer'
 startingTimer: 'Starting {symbol} '
 pauseTimer: '{symbol} Pause timer'
 pausingTimer: 'Pausing {symbol} '

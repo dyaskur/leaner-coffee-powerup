@@ -1,6 +1,6 @@
-import { Trello } from './types/TrelloPowerUp';
+import {Trello} from './types/TrelloPowerUp';
 import CardStorage from './storage/CardStorage';
-import { I18nConfig } from './utils/I18nConfig';
+import {I18nConfig} from './utils/I18nConfig';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 export const CapabilityHandlers = (powerUp: any): Trello.PowerUp.CapabilityHandlers => ({
@@ -21,7 +21,9 @@ export const CapabilityHandlers = (powerUp: any): Trello.PowerUp.CapabilityHandl
 
   'card-back-section': async (t: Trello.PowerUp.IFrame): Promise<Trello.PowerUp.CardBackSection> => {
     const discussionStatus = await powerUp.discussion.cardStorage.getDiscussionStatus(t);
-    if (discussionStatus === undefined) { return null; }
+    if (discussionStatus === undefined) {
+      return null;
+    }
 
     return {
       title: t.localizeKey('discussion'),
@@ -52,6 +54,10 @@ export const CapabilityHandlers = (powerUp: any): Trello.PowerUp.CapabilityHandl
       symbol: await powerUp.voting.hasCurrentMemberVoted(t) ? '☑' : '☐'
     }),
     callback: powerUp.handleVoting
+  }, {
+    icon: `${powerUp.baseUrl}/assets/powerup/heart.svg`,
+    text: await powerUp.voting.hasCurrentMemberVoted(t) ? t.localizeKey('startTimer', {symbol: '▶'}) : t.localizeKey('stopTimer', {symbol: '☐'}),
+    callback: powerUp.handleVoting
   }],
 
   'card-detail-badges': async (t: Trello.PowerUp.IFrame): Promise<Trello.PowerUp.CardDetailBadge[]> => {
@@ -67,7 +73,7 @@ export const CapabilityHandlers = (powerUp: any): Trello.PowerUp.CapabilityHandl
     text: t.localizeKey('clearVotes'),
     callback: async (t2): Promise<void> => {
       const result = await t2.list('cards');
-      result.cards.forEach(({ id }) => {
+      result.cards.forEach(({id}) => {
         powerUp.cardStorage.deleteMultiple(t2, [CardStorage.VOTES], id);
       });
       return t2.closePopup();
@@ -80,13 +86,17 @@ export const CapabilityHandlers = (powerUp: any): Trello.PowerUp.CapabilityHandl
       const votingData = await Promise.all(opts.cards.map(
         async (card): Promise<{ leanCoffeeVotes: number; id: string }> => {
           const leanCoffeeVotes = await powerUp.voting.countVotesByCard(t2, card.id);
-          return { leanCoffeeVotes, id: card.id };
+          return {leanCoffeeVotes, id: card.id};
         }
       ));
 
       const sortedCards = votingData.sort((cardA, cardB) => {
-        if (cardA.leanCoffeeVotes < cardB.leanCoffeeVotes) { return 1; }
-        if (cardB.leanCoffeeVotes < cardA.leanCoffeeVotes) { return -1; }
+        if (cardA.leanCoffeeVotes < cardB.leanCoffeeVotes) {
+          return 1;
+        }
+        if (cardB.leanCoffeeVotes < cardA.leanCoffeeVotes) {
+          return -1;
+        }
         return 0;
       });
 
@@ -107,5 +117,19 @@ export const CapabilityHandlers = (powerUp: any): Trello.PowerUp.CapabilityHandl
     args: {
       localization: I18nConfig
     }
-  })
+  }),
+
+  'show-authorization': (t: Trello.PowerUp.IFrame): PromiseLike<void> => t.popup({
+    title: `Auth Coffee v${process.env.VERSION}`,
+    url: `${powerUp.baseUrl}/auth.html`,
+    height: 184,
+    args: {
+      localization: I18nConfig
+    }
+  }),
+
+  'authorization-status': (t: Trello.PowerUp.IFrame): PromiseLike<any> => t.get('member', 'private', 'authToken')
+    .then(function (authToken) {
+      return {authorized: authToken != null}
+    })
 });

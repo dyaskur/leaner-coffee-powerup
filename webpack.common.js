@@ -1,11 +1,9 @@
 const path = require('path');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const yaml = require('js-yaml');
 
 const OUTPUT_FOLDER = 'docs';
-
 module.exports = {
   entry: {
     main: './src/index.ts',
@@ -13,16 +11,13 @@ module.exports = {
     discussion_ui: './src/discussion-ui.ts',
     ongoing_or_paused: './src/popups/ongoing_or_paused.ts'
   },
-
   output: {
     filename: '[name].[fullhash].js',
     path: path.resolve(__dirname, OUTPUT_FOLDER)
   },
-
   resolve: {
     extensions: ['.ts', '.js']
   },
-
   module: {
     rules: [
       {
@@ -32,7 +27,6 @@ module.exports = {
       }
     ]
   },
-
   plugins: [
     new HtmlWebpackPlugin({
       title: 'Lean Coffee Trello Power-up',
@@ -45,6 +39,12 @@ module.exports = {
       template: '_settings.html',
       filename: 'settings.html',
       chunks: ['settings']
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Auth Coffee Za',
+      template: '_auth.html',
+      filename: 'auth.html',
+      chunks: ['auth']
     }),
     new HtmlWebpackPlugin({
       title: 'Discussion UI',
@@ -64,7 +64,9 @@ module.exports = {
           {
             from: 'assets/**/*',
             globOptions: {
-              ignore: process.env.NODE_ENV === 'production' ? [] : ['assets/listings/**/*']
+              ignore: process.env.NODE_ENV === 'production'
+                ? []
+                : ['assets/listings/**/*']
             }
           },
           {

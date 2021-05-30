@@ -8,6 +8,7 @@
     "start": "webpack serve --config ./webpack.dev.js",
     "lint": "eslint -c .eslintrc.yml './src/**/*'",
     "dist": "export NODE_ENV=production && webpack --config webpack.prod.js",
+    "dev": "export NODE_ENV=development && webpack --config webpack.dev.js",
     "version": "npm run dist && git add -A docs",
     "screenshots": "node ./tools/L10nImages/build-screenshots.js",
     "screenshotsLocal": "node ./tools/L10nImages/build-screenshots.js --local",

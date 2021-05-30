@@ -290,8 +290,10 @@ export namespace Trello {
       'on-disable'?: () => void;
       'remove-data'?: () => void;
       'show-settings'?: (t: PowerUp.IFrame) => PromiseLike<void>;
-      'authorization-status'?: () => void;
-      'show-authorization'?: () => void;
+      'authorization-status'?: (t: PowerUp.IFrame) => PromiseLike<any>;
+      // 'authorization-status'?: () => void;
+      // 'show-authorization'?: () => void;
+      'show-authorization'?: (t: PowerUp.IFrame) => PromiseLike<void>;
     };
 
     type Model = 'board' | 'card' | 'organization';
